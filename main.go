@@ -30,6 +30,16 @@ const (
     hni
     wa
     mol
+    hms
+    p10
+    vts
+    vts1
+    vts2
+    ms
+    ms1
+    ms2
+    msv
+    msv1
     // NOTE: Place all patterns above this line!
     total
 )
@@ -74,13 +84,33 @@ func (p pattern) String() string {
         return "WA0%03d" 
     case mol:
         return "MOL0%02X"
+    case hms:
+        return "%02d%02d%02d"
+    case p10:
+        return "P10%05d"
+    case vts:
+        return "VTS %02d %01d"
+    case vts1:
+        return "VTS %03d 1"
+    case vts2:
+        return "VTS 01 %03d"
+    case ms:
+        return "My Slideshow"
+    case ms1:
+        return "My Slideshow %02d"
+    case ms2:
+        return "My Slideshow Video"
+    case msv:
+        return "My Stupeflix Video"
+    case msv1:
+        return "My Stupeflix Video %04d"
     }
     return ""
 }
 
 func (p pattern) Source() string {
     switch p {
-    case mov, onehun, sam, dsc, sdv, dscf, dscn, pict, maq, mol:
+    case mov, onehun, sam, dsc, sdv, dscf, dscn, pict, maq, mol, p10:
         return "Camera"
     case file:
         return "Dashcam"
@@ -90,8 +120,10 @@ func (p pattern) Source() string {
         return "Drone"
     case hni:
         return "Nintendo DS"
-    case wa:
+    case wa, hms:
         return "Misc."
+    case ms, ms1, ms2, msv, msv1:
+        return "Video Editor"
     }
     return "Unknown"
 }
@@ -106,8 +138,20 @@ func (p pattern) Generate() string {
         return fmt.Sprintf(p.String(), rand.Intn(1_000))
     case mol:
         return fmt.Sprintf(p.String(), rand.Intn(100))
+    case hms:
+        return fmt.Sprintf(p.String(), rand.Intn(24), rand.Intn(60), rand.Intn(60))
+    case p10:
+        return fmt.Sprintf(p.String(), rand.Intn(20_000))
+    case vts:
+        return fmt.Sprintf(p.String(), rand.Intn(100), rand.Intn(10))
+    case vts1, vts2:
+        return fmt.Sprintf(p.String(), rand.Intn(1_000))
+    case ms1:
+        return fmt.Sprintf(p.String(), rand.Intn(100))
+    case msv1:
+        return fmt.Sprintf(p.String(), rand.Intn(1051))
     }
-    return ""
+    return p.String()
 }
 
 func (p pattern) Url() string {
@@ -120,5 +164,5 @@ func Rand() pattern {
 
 func main() {
     r := Rand()
-    fmt.Printf("Go search '%s', device is usually %s (%s)\n", r.Generate(), r.Source(), r.Url())
+    fmt.Printf("Go search '%s', source '%s' (%s)\n", r.Generate(), r.Source(), r.Url())
 }
