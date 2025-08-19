@@ -2,9 +2,11 @@ package main
 
 import (
     "fmt"
+    "net/url"
     "math/rand"
 )
 
+const ytBaseUrl = "https://www.youtube.com/results?search_query=%s"
 
 type pattern int
 
@@ -76,6 +78,24 @@ func (p pattern) String() string {
     return ""
 }
 
+func (p pattern) Source() string {
+    switch p {
+    case mov, onehun, sam, dsc, sdv, dscf, dscn, pict, maq, mol:
+        return "Camera"
+    case file:
+        return "Dashcam"
+    case gopr, gp, gx:
+        return "GoPro"
+    case dji:
+        return "Drone"
+    case hni:
+        return "Nintendo DS"
+    case wa:
+        return "Misc."
+    }
+    return "Unknown"
+}
+
 func (p pattern) Generate() string {
     switch p {
     case img, mvi, mov, onehun, sam, dsc, sdv, dscf, dscn, pict, maq, file, gopr, gp, gx, dji:
@@ -90,10 +110,15 @@ func (p pattern) Generate() string {
     return ""
 }
 
+func (p pattern) Url() string {
+    return fmt.Sprintf(ytBaseUrl, url.PathEscape(p.Generate()))
+}
+
 func Rand() pattern {
     return pattern(rand.Intn(int(total)))
 }
 
 func main() {
-    fmt.Println(mol.Generate())
+    r := Rand()
+    fmt.Printf("Go search '%s', device is usually %s (%s)\n", r.Generate(), r.Source(), r.Url())
 }
