@@ -10,7 +10,7 @@ import (
 )
 
 //go:embed index.html
-var tmplFS embed.FS
+var index embed.FS
 
 type Page struct {
     Term string
@@ -18,8 +18,10 @@ type Page struct {
     Source string
 }
 
+const httpListener = ":8081"
+
 func main() {
-    tmpl, err := template.ParseFS(tmplFS, "index.html")
+    tmpl, err := template.ParseFS(index, "index.html")
     if err != nil {
         log.Printf("failed to parse template: %v\n", err)
         os.Exit(1)
@@ -31,6 +33,8 @@ func main() {
             http.Error(w, "failed to parse template", http.StatusInternalServerError)
         }
     })
+
+    log.Printf("starting http server on %s\n", httpListener)
     
     if err := http.ListenAndServe(":8081", nil); err != nil {
         log.Printf("failed to serve http: %v\n", err)

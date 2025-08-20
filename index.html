@@ -1,16 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-GB">
     <head>
-        <title>OND</title>
+        <title>TYGraveyard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="light dark">
+        <meta name="description" content="YTGraveyard, where videos go to die.">
+        <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" >
     </head>
     <body>
-        <center>
-            <h2>Dead YouTube Link Generator</h2>
-            <p>Explore the depths of YouTube</p>
-<pre>
-{{ .Term }}
-</pre>
-            <a href="{{ .Url }}" target="_blank">Open in YouTube</a>&nbsp;|&nbsp;<a href="/">Regenerate</a>
-        </center>
+        <header>
+            <nav>
+                <a href="https://github.com/froople">GitHub</a>
+            </nav>
+            <h1>YouTube Graveyard</h1>
+        </header>
+        <main>
+            <p class="notice">
+                <strong>Hey there! 👋</strong><br />
+                Below is a generated search term that will yield YouTube videos with little to no views. This concept was created by the great <a href="https://www.youtube.com/@KVNAUST" target="_blank">[KVN AUST]</a>. All credit for the concept and <a href="https://x.com/MingKasterMK/status/1818337566292381857" target="_blank">search term patterns</a> goes to him.
+            </p>
+            <center>
+                <h3>Your generated search term</h3>
+                <a href="{{ .Url }}" style="text-decoration: none;" target="_blank" title="Open in YouTube">
+                    <h3 class="notice"><code>{{ .Term }}</code></h3>
+                </a>
+                <small><i>Results for this term are often sourced from <code>{{ .Source }}</code></i></small><br />
+            </center>
+        </main>
+        <footer>
+            Site created by <a href="https://www.froople.net">Froople</a>
+        </footer>
     </body>
 </html>
