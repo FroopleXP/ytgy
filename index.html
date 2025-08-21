@@ -5,6 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="color-scheme" content="light dark">
         <meta name="description" content="YouTube Graveyard, where videos go to die.">
+        <meta property="og:title" content="'{{ .Term }}' is your key to the graveyard" />
+        <meta property="og:description" content="'{{ .Term }}' is yielding some pretty dead results, check it out YouTube" />
+        <meta property="og:url" content="{{ .Url }}" />
         <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" >
     </head>
     <body>
@@ -21,11 +24,13 @@
             </p>
             <center>
                 <h3>Your generated search term</h3>
-                <a href="{{ .Url }}" style="text-decoration: none;" target="_blank" title="Open in YouTube">
-                    <h3 class="notice"><code>{{ .Term }}</code></h3>
-                </a>
                 <small><i>Results for this term are often sourced from <code>{{ .Source }}</code></i></small><br />
-                <small>Click the term above to open in YouTube</small><br />
+                <a href="{{ .Url }}" style="text-decoration: none;" target="_blank" title="Open in YouTube">
+                    <h3 class="notice">
+                        <code>{{ .Term }}</code>
+                    </h3>
+                </a>
+                <small>Click the term to open in YouTube or <a href="/">regenerate</a></small><br />
             </center>
         </main>
         <footer>
