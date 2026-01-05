@@ -3,7 +3,9 @@ package ytgy
 import (
     "fmt"
     "net/url"
-    "math/rand"
+    mrand "math/rand"
+    "math/big"
+	"crypto/rand"
 )
 
 const ytBaseUrl = "https://www.youtube.com/results?search_query=%s"
@@ -131,25 +133,25 @@ func (p pattern) Source() string {
 func (p pattern) Generate() string {
     switch p {
     case img, mvi, mov, onehun, sam, dsc, sdv, dscf, dscn, pict, maq, file, gopr, gp, gx, dji:
-        return fmt.Sprintf(p.String(), rand.Intn(10_000))
+        return fmt.Sprintf(p.String(), mrand.Intn(10_000))
     case hni:
-        return fmt.Sprintf(p.String(), rand.Intn(101))
+        return fmt.Sprintf(p.String(), mrand.Intn(101))
     case wa:
-        return fmt.Sprintf(p.String(), rand.Intn(1_000))
+        return fmt.Sprintf(p.String(), mrand.Intn(1_000))
     case mol:
-        return fmt.Sprintf(p.String(), rand.Intn(100))
+        return fmt.Sprintf(p.String(), mrand.Intn(100))
     case hms:
-        return fmt.Sprintf(p.String(), rand.Intn(24), rand.Intn(60), rand.Intn(60))
+        return fmt.Sprintf(p.String(), mrand.Intn(24), mrand.Intn(60), mrand.Intn(60))
     case p10:
-        return fmt.Sprintf(p.String(), rand.Intn(20_000))
+        return fmt.Sprintf(p.String(), mrand.Intn(20_000))
     case vts:
-        return fmt.Sprintf(p.String(), rand.Intn(100), rand.Intn(10))
+        return fmt.Sprintf(p.String(), mrand.Intn(100), mrand.Intn(10))
     case vts1, vts2:
-        return fmt.Sprintf(p.String(), rand.Intn(1_000))
+        return fmt.Sprintf(p.String(), mrand.Intn(1_000))
     case ms1:
-        return fmt.Sprintf(p.String(), rand.Intn(100))
+        return fmt.Sprintf(p.String(), mrand.Intn(100))
     case msv1:
-        return fmt.Sprintf(p.String(), rand.Intn(1051))
+        return fmt.Sprintf(p.String(), mrand.Intn(1051))
     }
     return p.String()
 }
@@ -159,6 +161,11 @@ func (p pattern) Url() string {
 }
 
 func Rand() pattern {
-    return pattern(rand.Intn(int(total)))
+    return pattern(mrand.Intn(int(total)))
+}
+
+func BetterRand() pattern {
+	n, _ := rand.Int(rand.Reader, big.NewInt(int64(total)))	
+	return pattern(n.Int64())
 }
 
